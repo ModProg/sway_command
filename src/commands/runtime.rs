@@ -1,6 +1,6 @@
 use derive_more::Display;
 
-use super::{to_string_or_empty, when, GapsDirection, Output, Workspace};
+use super::{to_string_or_empty, when, GapsDirection, Output, Workspace, EnDisTog, EnDisable};
 
 #[derive(Display)]
 pub enum SubCommand {
