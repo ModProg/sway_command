@@ -1,14 +1,16 @@
 use derive_more::Display;
 
-use super::{to_string_or_empty, when, GapsDirection, Output, Workspace, EnDisTog, EnDisable};
+use super::{to_string_or_empty, when, EnDisTog, EnDisable, GapsDirection, Output, Workspace};
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+/// A command that can be called with a criteria
 pub enum SubCommand {
     /// Set border style for focused window
     ///
     /// Default is normal with border thickness 2.
     #[display(fmt = "border {_0}")]
     Border(Border),
+    // TODO move
     /// Exit sway and end your Wayland session
     #[display(fmt = "exit")]
     Exit,
@@ -65,6 +67,7 @@ pub enum SubCommand {
     /// further details.
     #[display(fmt = "max_render_time {_0}")]
     MaxRenderTime(MaxRenderTime),
+    /// Move a window, container or workspace
     #[display(fmt = "move {_0}")]
     Move(Move),
     /// A no operation command that can be used to override default behaviour.
@@ -123,12 +126,13 @@ pub enum SubCommand {
     /// Sets the format of window titles. The following placeholders may be
     /// used:
     ///
-    ///     - %title - The title supplied by the window
-    ///     - %app_id - The wayland app ID (applicable to wayland windows only)
-    ///     - %class - The X11 classname (applicable to xwayland windows only)
-    ///     - %instance - The X11 instance (applicable to xwayland windows only)
-    ///     - %shell - The protocol the window is using (typically xwayland or
-    ///       xdg_shell)
+    ///  - `%title` - The title supplied by the window
+    ///  - `%app_id` - The wayland app ID (applicable to `wayland` windows only)
+    ///  - `%class` - The X11 classname (applicable to `xwayland` windows only)
+    ///  - `%instance` - The X11 instance (applicable to `xwayland` windows
+    ///    only)
+    ///  - `%shell` - The protocol the window is using (typically `xwayland` or
+    ///    `xdg_shell`)
     ///
     /// This command is typically used with for_window criteria. For example:
     ///
@@ -141,7 +145,7 @@ pub enum SubCommand {
     TitleFormat(String),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Border {
     #[display(fmt = "none")]
     None,
@@ -159,7 +163,7 @@ pub enum Border {
     Toggle,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Focus {
     /// Moves focus to the container that matches the specified criteria
     #[display(fmt = "")]
@@ -206,7 +210,7 @@ pub enum Focus {
     ModeToggle,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum FocusOutput {
     /// Next output in the specified direction
     #[display(fmt = "up")]
@@ -224,7 +228,7 @@ pub enum FocusOutput {
     Name(String),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum FullscreenGlobal {
     #[display(fmt = "global")]
     Global,
@@ -232,7 +236,7 @@ pub enum FullscreenGlobal {
     No,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum GapsWorkspaces {
     #[display(fmt = "all")]
     All,
@@ -240,7 +244,7 @@ pub enum GapsWorkspaces {
     Current,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum GapsModification {
     #[display(fmt = "set")]
     Set,
@@ -252,7 +256,7 @@ pub enum GapsModification {
     Toggle,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum InhibitIdle {
     /// Will inhibit idle when the view is focused by any seat
     #[display(fmt = "focus")]
@@ -273,7 +277,7 @@ pub enum InhibitIdle {
     Visible,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Layout {
     #[display(fmt = "default")]
     Default,
@@ -291,7 +295,7 @@ pub enum Layout {
     Toggle(LayoutToggle),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum LayoutToggle {
     /// Cycles through stacking, tabbed and the last split layout.     None,
     None,
@@ -310,7 +314,7 @@ pub enum LayoutToggle {
     Options(Vec<LayoutToggleOptions>),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum LayoutToggleOptions {
     #[display(fmt = "split")]
     Split,
@@ -324,14 +328,14 @@ pub enum LayoutToggleOptions {
     Splith,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum MaxRenderTime {
     #[display(fmt = "off")]
     Off,
     Msec(u32),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Move {
     /// Moves the focused container in the direction specified. Pixels are
     /// ignored when moving tiled containers
@@ -387,7 +391,7 @@ pub enum Move {
     WorkspaceToOutput(Output),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Resize {
     /// Resizes the currently focused container by amount, specified in pixels
     /// or percentage points. If the units are omitted, floating containers are
@@ -433,7 +437,7 @@ pub enum Resize {
     Set(Length, Length),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Split {
     Vertical,
     Horizontal,
@@ -444,7 +448,7 @@ pub enum Split {
     Toggle,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Swap {
     /// can only be used with xwayland views
     #[display(fmt = "id {_0}")]
@@ -455,7 +459,7 @@ pub enum Swap {
     Mark(String),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Length {
     #[display(fmt = "{_0} px")]
     Px(u32),

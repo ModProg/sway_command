@@ -12,8 +12,10 @@ pub use standalone::*;
 mod font;
 pub use font::*;
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+/// Workspace Selector
 pub enum Workspace {
+    /// Workspace name
     #[display(fmt = "_0")]
     Name(WorkspaceName),
     /// Also matches a workspace with the same number, even if it has a
@@ -45,14 +47,18 @@ pub enum Workspace {
     BackAndForth,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+/// Name of a workspace
 pub enum WorkspaceName {
+    /// Name without additional index
     Simple(String),
+    /// Name with index
     #[display(fmt = "{_0}:{_1}")]
     WithNumber(u32, String),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+/// Output Selector
 pub enum Output {
     /// Next output in the specified direction
     #[display(fmt = "up")]
@@ -66,13 +72,16 @@ pub enum Output {
     /// Next output in the specified direction
     #[display(fmt = "left")]
     Left,
+    /// Currently focused output
     #[display(fmt = "current")]
     Current,
     /// Named output
     Name(String),
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+/// Direction of Gaps
+#[allow(missing_docs)]
 pub enum GapsDirection {
     #[display(fmt = "inner")]
     Inner,
@@ -92,7 +101,8 @@ pub enum GapsDirection {
     Left,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+#[allow(missing_docs)]
 pub enum YesNo {
     #[display(fmt = "yes")]
     Yes,
@@ -100,7 +110,8 @@ pub enum YesNo {
     No,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+#[allow(missing_docs)]
 pub enum EnDisable {
     #[display(fmt = "enable")]
     Enable,
@@ -108,7 +119,8 @@ pub enum EnDisable {
     Disable,
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
+#[allow(missing_docs)]
 pub enum EnDisTog {
     #[display(fmt = "enable")]
     Enable,

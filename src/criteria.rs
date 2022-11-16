@@ -1,9 +1,8 @@
 use derive_more::{AsRef, Display};
-
 #[cfg(feature = "serde")]
 use serde::Deserialize;
 
-#[derive(AsRef, Display)]
+#[derive(AsRef, Display, Clone)]
 #[display(fmt = "{rep}")]
 pub struct CriteriaList {
     #[as_ref(forward)]
@@ -30,7 +29,7 @@ impl CriteriaList {
     }
 }
 
-#[derive(Display)]
+#[derive(Display, Clone)]
 pub enum Criteria {
     /// Compare value against the app id. Can be a regular expression. If value
     /// is __focused__, then the app id must be the same as that of the
@@ -114,7 +113,7 @@ pub enum Criteria {
     Workspace(OrFocused<String>),
 }
 
-#[derive(Display, Debug)]
+#[derive(Display, Debug, Clone)]
 pub enum OrFocused<T> {
     #[display(fmt = "__focused__")]
     Focused,
@@ -131,6 +130,7 @@ impl<T> From<T> for OrFocused<T> {
 #[derive(Display)]
 #[cfg_attr(feature = "serde", derive(Deserialize))]
 #[serde(rename_all = "snake_case")]
+#[derive(Clone)]
 pub enum Urgent {
     #[display(fmt = "first")]
     First,
@@ -149,6 +149,7 @@ pub enum Urgent {
 #[derive(Display)]
 #[cfg_attr(feature = "serde", derive(Deserialize))]
 #[serde(rename_all = "snake_case")]
+#[derive(Clone)]
 pub enum WindowType {
     #[display(fmt = "normal")]
     Normal,

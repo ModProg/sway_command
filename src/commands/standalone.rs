@@ -168,7 +168,13 @@ pub enum CriterialessCommand {
     #[display(fmt = "focus_wrapping {_0}")]
     FocusWrapping(FocusWrapping),
     /// Sets font to use for the title bars
-    /// To enable support for pango markup, preface the font name with pango:. For example, monospace 10 is the default font. To enable support for pango markup, pango:monospace 10 should be used instead. Regardless of whether pango markup is enabled, font should be specified as a pango font description. For more information on pango font descriptions, see https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description
+    ///
+    /// To enable support for pango markup, preface the font name with `pango:`.
+    /// For example, monospace 10 is the default font. To enable support for
+    /// pango markup, pango:monospace 10 should be used instead. Regardless
+    /// of whether pango markup is enabled, font should be specified as a
+    /// pango font description. For more information on pango font
+    /// descriptions, see <https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#description>
     #[display(fmt = "font {_0}")]
     Font(Font),
     /// If an application on another workspace sets an urgency hint, switching
@@ -434,6 +440,16 @@ pub struct SymKey {
     key: String,
 }
 
+impl SymKey {
+    pub fn key(key: impl Into<String>) -> Self {
+        Self {
+            group: Default::default(),
+            modifiers: Default::default(),
+            key: key.into(),
+        }
+    }
+}
+
 #[derive(Display)]
 #[display(fmt = "{modifiers}{key}")]
 pub struct SymCode {
@@ -441,8 +457,9 @@ pub struct SymCode {
     key: u32,
 }
 
-#[derive(Display)]
+#[derive(Display, Default)]
 pub enum Group {
+    #[default]
     #[display(fmt = "")]
     None,
     #[display(fmt = "Group1+")]
