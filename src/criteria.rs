@@ -47,7 +47,7 @@ pub enum Criteria {
     /// If value is __focused__, then the id must be the same as that of the
     /// currently focused window.
     #[display(fmt = "con_id=\"{}\"", "_0")]
-    ConId(OrFocused<u32>),
+    ConId(OrFocused<i64>),
 
     /// Compare against the window marks. Can be a regular expression.
     #[display(fmt = "con_mark=\"{}\"", "_0")]
